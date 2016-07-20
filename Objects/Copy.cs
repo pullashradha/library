@@ -9,7 +9,7 @@ namespace Library
     private int _id;
     private string _condition;
     private int _bookId;
-    public Book(string Condition, int BookId, int Id = 0)
+    public Copy (string Condition, int BookId, int Id = 0)
     {
       _id = Id;
       _condition = Condition;
@@ -92,7 +92,7 @@ namespace Library
         string copyCondition = rdr.GetString(1);
         int bookId = rdr.GetInt32(2);
         Copy newCopy = new Copy (copyCondition, bookId, copyId);
-        allCopys.Add(newCopy);
+        allCopies.Add(newCopy);
       }
       if (rdr != null)
       {
@@ -106,7 +106,7 @@ namespace Library
     }
     public static Copy Find (int searchId)
     {
-      Copy foundCopy = new Copy(""); //Program needs some value inside a Copy object
+      Copy foundCopy = new Copy("", 0); //Program needs some value inside a Copy object
       SqlConnection conn = DB.Connection();
       conn.Open();
       SqlDataReader rdr = null;
@@ -142,7 +142,7 @@ namespace Library
       SqlCommand cmd = new SqlCommand ("UPDATE copies SET condition = @CopyCondition WHERE id = @SearchId; UPDATE copies SET book_id = @BookId WHERE id = @SearchId;", conn);
       SqlParameter newConditionParameter = new SqlParameter();
       newConditionParameter.ParameterName = "@CopyCondition";
-      newConditionParameter.Value = this.GetTitle();
+      newConditionParameter.Value = this.GetCondition();
       SqlParameter newBookIdParameter = new SqlParameter();
       newBookIdParameter.ParameterName = "@BookId";
       newBookIdParameter.Value = this.GetBookId();
