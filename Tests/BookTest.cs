@@ -53,6 +53,11 @@ namespace Library
       Assert.Equal(2, resultCount);
     }
     [Fact]
+    public void Test_AddAuthor_AddAnAuthorToABook()
+    {
+
+    }
+    [Fact]
     public void Test_Find_FindBookInDatabase()
     {
       Book testBook1 = new Book("Redwall");

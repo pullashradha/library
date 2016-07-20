@@ -39,6 +39,30 @@ namespace Library
         return false;
       }
     }
+    public void Save()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+      SqlDataReader rdr = null;
+      SqlCommand cmd = new SqlCommand ("INSERT INTO authors (name) OUTPUT INSERTED.id VALUES (@AuthorName);", conn);
+      SqlParameter nameParameter = new SqlParameter ();
+      nameParameter.ParameterName = "@AuthorName";
+      nameParameter.Value = this.GetName();
+      cmd.Parameters.Add(nameParameter);
+      rdr = cmd.ExecuteReader();
+      while (rdr.Read())
+      {
+        this._id = rdr.GetInt32(0);
+      }
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+    }
     public static List<Author> GetAll()
     {
       List<Author> allAuthors = new List<Author> {};
@@ -64,25 +88,24 @@ namespace Library
       }
       return allAuthors;
     }
-    public void Save()
+    public void AddBook(Book newBook)
     {
-      SqlConnection conn = DB.Connection();
+      SqlConnection conn = DB.Connection;
       conn.Open();
-      SqlDataReader rdr = null;
-      SqlCommand cmd = new SqlCommand ("INSERT INTO authors (name) OUTPUT INSERTED.id VALUES (@AuthorName);", conn);
-      SqlParameter nameParameter = new SqlParameter ();
-      nameParameter.ParameterName = "@AuthorName";
-      nameParameter.Value = this.GetName();
-      cmd.Parameters.Add(nameParameter);
-      rdr = cmd.ExecuteReader();
-      while (rdr.Read())
-      {
-        this._id = rdr.GetInt32(0);
-      }
-      if (rdr != null)
-      {
-        rdr.Close();
-      }
+      SqlCommand cmd = new SqlCommand ("INSERT INTO authors_books (author_id, book_id) VALUES (@AuthorId, @BookId);", conn);
+      SqlParameter authorIdParameter = new SqlParameter();
+      authorIdParameter.ParameterName = "@AuthorId";
+      authorIdParameter.Value = this.GetId();
+
+      SqlParameter bookIdParameter = new SqlParameter();
+      bookIdParameter.ParameterName = "@BookId";
+      bookIdParameter.Value = newBook.GetId();
+
+      cmd.Parameters.Add(authorIdParameter);
+      cmd.Parameters.Add(bookIdParameter);
+
+      cmd.ExecuteNonQuery();
+
       if (conn != null)
       {
         conn.Close();
