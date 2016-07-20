@@ -117,6 +117,34 @@ namespace Library
       }
       return foundBook;
     }
+    public void Update ()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+      SqlDataReader rdr = null;
+      SqlCommand cmd = new SqlCommand ("UPDATE books SET title = @BookTitle WHERE id = @SearchId;", conn);
+      SqlParameter newTitleParameter = new SqlParameter();
+      newTitleParameter.ParameterName = "@BookTitle";
+      newTitleParameter.Value = this.GetTitle();
+      SqlParameter idParameter = new SqlParameter();
+      idParameter.ParameterName = "@SearchId";
+      idParameter.Value = this.GetId();
+      cmd.Parameters.Add(newTitleParameter);
+      cmd.Parameters.Add(idParameter);
+      rdr = cmd.ExecuteReader();
+      while (rdr.Read())
+      {
+        this._id = rdr.GetInt32(0);
+      }
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+    }
     public static void DeleteAll()
     {
       SqlConnection conn = DB.Connection();

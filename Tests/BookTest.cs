@@ -59,6 +59,18 @@ namespace Library
 
       Assert.Equal(testBook1, result);
     }
+    [Fact]
+    public void Test_Update_UpdateBookInDatabase()
+    {
+      Book newBook = new Book("Redwall");
+      newBook.Save();
+      newBook.SetTitle("Redwall!!");
+      newBook.Update();
+
+      Book updatedBook = Book.Find("Redwall!!");
+
+      Assert.Equal(newBook.GetTitle(), updatedBook.GetTitle());
+    }
     public void Dispose()
     {
       Book.DeleteAll();
