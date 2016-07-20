@@ -26,20 +26,32 @@ namespace Library
 
       Assert.Equal(testBook1, testBook2);
     }
-    // [Fact]
-    // public void Test_GetAll_RetrieveAllBooks()
-    // {
-    //   Book testBook1 = new Book("Redwall");
-    //   Book testBook2 = new Book("Memnoch the Devil");
-    //
-    //   List<Book> testList = new List<Book>{testBook1, testBook2};
-    //   List<Book> result = Book.GetAll();
-    //
-    //   Assert.Equal(testList, result);
-    // }
+    [Fact]
+    public void Test_GetAll_RetrieveAllBooks()
+    {
+      Book testBook1 = new Book("Redwall");
+      Book testBook2 = new Book("Memnoch the Devil");
+      testBook1.Save();
+      testBook2.Save();
+
+      List<Book> testList = new List<Book>{testBook1, testBook2};
+      List<Book> result = Book.GetAll();
+
+      Assert.Equal(testList, result);
+    }
+    [Fact]
+    public void Test_Save_SavesBooksToDatabase()
+    {
+      Book newBook1 = new Book("Redwall");
+      Book newBook2 = new Book("Memnoch the Devil");
+      newBook1.Save();
+      newBook2.Save();
+      int resultCount = Book.GetAll().Count;
+      Assert.Equal(2, resultCount);
+    }
     public void Dispose()
     {
-      // Book.DeleteAll();
+      Book.DeleteAll();
     }
   }
 }
