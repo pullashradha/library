@@ -49,6 +49,16 @@ namespace Library
       int resultCount = Book.GetAll().Count;
       Assert.Equal(2, resultCount);
     }
+    [Fact]
+    public void Test_Find_FindBookInDatabase()
+    {
+      Book testBook1 = new Book("Redwall");
+      testBook1.Save();
+
+      Book result = Book.Find(testBook1.GetTitle());
+
+      Assert.Equal(testBook1, result);
+    }
     public void Dispose()
     {
       Book.DeleteAll();

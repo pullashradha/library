@@ -88,6 +88,35 @@ namespace Library
         conn.Close();
       }
     }
+    public static Book Find(string findTitle)
+    {
+      Book foundBook = new Book(""); //Program needs some value inside a Book object
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+      SqlDataReader rdr = null;
+      SqlCommand cmd = new SqlCommand("SELECT * FROM books WHERE title = @BookTitle;", conn);
+      SqlParameter titleParameter = new SqlParameter();
+      titleParameter.ParameterName = "@BookTitle";
+      titleParameter.Value = findTitle;
+      cmd.Parameters.Add(titleParameter);
+      rdr = cmd.ExecuteReader();
+      while (rdr.Read())
+      {
+        int bookId = rdr.GetInt32(0);
+        string bookTitle = rdr.GetString(1);
+        Book newBook = new Book(bookTitle, bookId);
+        foundBook = newBook;
+      }
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+      return foundBook;
+    }
     public static void DeleteAll()
     {
       SqlConnection conn = DB.Connection();
