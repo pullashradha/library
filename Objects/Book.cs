@@ -8,18 +8,15 @@ namespace Library
   {
     private int _id;
     private string _title;
-
     public Book(string Title, int Id = 0)
     {
       _id = Id;
       _title = Title;
     }
-
     public int GetId()
     {
       return _id;
     }
-
     public string GetTitle()
     {
       return _title;
@@ -28,7 +25,20 @@ namespace Library
     {
       _title = NewTitle;
     }
-
+    public override bool Equals(System.Object otherBook)
+    {
+      if (otherBook is Book)
+      {
+        Book testBook = (Book) otherBook;
+        bool idEquality = (this.GetId() == testBook.GetId());
+        bool titleEquality = (this.GetTitle() == testBook.GetTitle());
+        return (idEquality && titleEquality);
+      }
+      else
+      {
+        return false;
+      }
+    }
     public static List<Book> GetAll()
     {
       List<Book> allBooks = new List<Book> {};
