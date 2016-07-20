@@ -1,12 +1,12 @@
 # Library Webpage
 
-#### (Week Name) Independent Project for Epicodus, 07/20/2016
+#### Two-Day Project for Epicodus, 07/20/2016
 
 #### By Shradha Pulla & Stewart Cole
 
 ## Description
 
-Longer succinct description of program.
+This program will serve as a catalog for a library, and allow patrons to check out books.
 
 ## Setup/Installation Requirements
 
@@ -15,8 +15,8 @@ This program can only be accessed on a PC with Windows 10, and with Git, Atom, a
 * Clone this repository
 * Import the database and test database:
   * Open SSMS
-  * Select the following buttons from the top nav bar to open the database scripts file: File>Open>File>"Desktop\RepositoryName\Sql Databases\database_name.sql"
-  * Save the database_name.sql file
+  * Select the following buttons from the top nav bar to open the database scripts file: File>Open>File>"Desktop\Library\Sql Databases\library.sql"
+  * Save the library.sql file
   * To create the database: click the "!Execute" button on the top nav bar
   * Repeat the above steps to import the test database
 * Test the program:
@@ -34,7 +34,14 @@ No known bugs.
 
 The program should ... | Example Input | Example Output
 ----- | ----- | -----
-Spec 1 | Example Input: | Example Output:
+Add a new book to the catalog | --- | ---
+Find a book from the catalog by author or title | --- | ---
+View a book from the catalog | --- | ---
+Update a book entry in the catalog | --- | ---
+Delete a book from the catalog | --- | ---
+Find how many copies of a book there are | --- | ---
+View all books in the catalog | --- | ---
+Add an author to a book | --- | ---
 
 ## Future Features
 
