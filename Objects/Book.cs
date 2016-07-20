@@ -88,7 +88,7 @@ namespace Library
       }
       return allBooks;
     }
-    public void AddAuthor(Author newAuthor)
+    public void AddAuthor (Author newAuthor)
     {
       SqlConnection conn = DB.Connection();
       conn.Open();
@@ -96,16 +96,12 @@ namespace Library
       SqlParameter authorIdParameter = new SqlParameter();
       authorIdParameter.ParameterName = "@AuthorId";
       authorIdParameter.Value = newAuthor.GetId();
-
       SqlParameter bookIdParameter = new SqlParameter();
       bookIdParameter.ParameterName = "@BookId";
       bookIdParameter.Value = this.GetId();
-
       cmd.Parameters.Add(authorIdParameter);
       cmd.Parameters.Add(bookIdParameter);
-
       cmd.ExecuteNonQuery();
-
       if (conn != null)
       {
         conn.Close();
@@ -140,7 +136,7 @@ namespace Library
       }
       return allAuthors;
     }
-    public static Book Find(int searchId)
+    public static Book Find (int searchId)
     {
       Book foundBook = new Book(""); //Program needs some value inside a Book object
       SqlConnection conn = DB.Connection();
@@ -169,7 +165,7 @@ namespace Library
       }
       return foundBook;
     }
-    public void Update ()
+    public void Update()
     {
       SqlConnection conn = DB.Connection();
       conn.Open();

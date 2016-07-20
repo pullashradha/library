@@ -53,6 +53,20 @@ namespace Library
       Assert.Equal(2, resultCount);
     }
     [Fact]
+    public void Test_AddBook_AddABookToAnAuthor()
+    {
+      Author newAuthor = new Author("Brian Jacques");
+      newAuthor.Save();
+      Book newBook = new Book("Redwall");
+      newBook.Save();
+      newAuthor.AddBook(newBook);
+
+      List<Book> testBook = new List<Book> {newBook};
+      List<Book> allBooks = newAuthor.GetBooks();
+
+      Assert.Equal(testBook, allBooks);
+    }
+    [Fact]
     public void Test_Find_FindAuthorInDatabase()
     {
       Author testAuthor1 = new Author("Brian Jacques");
@@ -93,6 +107,7 @@ namespace Library
     }
     public void Dispose()
     {
+      Book.DeleteAll();
       Author.DeleteAll();
     }
   }

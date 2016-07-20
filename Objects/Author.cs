@@ -88,7 +88,7 @@ namespace Library
       }
       return allAuthors;
     }
-    public void AddBook(Book newBook)
+    public void AddBook (Book newBook)
     {
       SqlConnection conn = DB.Connection();
       conn.Open();
@@ -96,14 +96,11 @@ namespace Library
       SqlParameter authorIdParameter = new SqlParameter();
       authorIdParameter.ParameterName = "@AuthorId";
       authorIdParameter.Value = this.GetId();
-
       SqlParameter bookIdParameter = new SqlParameter();
       bookIdParameter.ParameterName = "@BookId";
       bookIdParameter.Value = newBook.GetId();
-
       cmd.Parameters.Add(authorIdParameter);
       cmd.Parameters.Add(bookIdParameter);
-
       cmd.ExecuteNonQuery();
 
       if (conn != null)
@@ -111,7 +108,36 @@ namespace Library
         conn.Close();
       }
     }
-    public static Author Find(int searchId)
+    public List<Book> GetBooks()
+    {
+      List<Book> allBooks = new List<Book> {};
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+      SqlDataReader rdr = null;
+      SqlCommand cmd = new SqlCommand ("SELECT books.* FROM books JOIN authors_books ON (books.id = authors_books.book_id) JOIN authors ON (authors.id = authors_books.author_id) WHERE authors.id = @AuthorId;", conn);
+      SqlParameter authorIdParameter = new SqlParameter();
+      authorIdParameter.ParameterName = "@AuthorId";
+      authorIdParameter.Value = this.GetId();
+      cmd.Parameters.Add(authorIdParameter);
+      rdr = cmd.ExecuteReader();
+      while (rdr.Read())
+      {
+        int bookId = rdr.GetInt32(0);
+        string bookTitle = rdr.GetString(1);
+        Book newBook = new Book (bookTitle, bookId);
+        allBooks.Add(newBook);
+      }
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+      return allBooks;
+    }
+    public static Author Find (int searchId)
     {
       Author foundAuthor = new Author(""); //Program needs some value inside a Author object
       SqlConnection conn = DB.Connection();
@@ -140,7 +166,7 @@ namespace Library
       }
       return foundAuthor;
     }
-    public void Update ()
+    public void Update()
     {
       SqlConnection conn = DB.Connection();
       conn.Open();
