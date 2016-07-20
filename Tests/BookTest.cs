@@ -16,6 +16,7 @@ namespace Library
     public void Test_Database_EmptyAtFirst()
     {
       int result = Book.GetAll().Count;
+
       Assert.Equal(0, result);
     }
     [Fact]
@@ -46,7 +47,9 @@ namespace Library
       Book newBook2 = new Book("Memnoch the Devil");
       newBook1.Save();
       newBook2.Save();
+
       int resultCount = Book.GetAll().Count;
+
       Assert.Equal(2, resultCount);
     }
     [Fact]
@@ -70,6 +73,23 @@ namespace Library
       Book updatedBook = Book.Find("Redwall!!");
 
       Assert.Equal(newBook.GetTitle(), updatedBook.GetTitle());
+    }
+    [Fact]
+    public void Test_DeleteOne_DeletesOneBook()
+    {
+
+      Book newBook1 = new Book("Redwall");
+      Book newBook2 = new Book("Memnoch the Devil");
+      newBook1.Save();
+      newBook2.Save();
+      List<Book> newList = Book.GetAll();
+
+      newBook1.DeleteOne();
+      
+      List<Book> resultList = Book.GetAll();
+      List<Book> testList = new List<Book> {newBook2};
+
+      Assert.Equal(testList, resultList);
     }
     public void Dispose()
     {
