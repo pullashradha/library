@@ -90,7 +90,7 @@ namespace Library
     }
     public void AddAuthor(Author newAuthor)
     {
-      SqlConnection conn = DB.Connection;
+      SqlConnection conn = DB.Connection();
       conn.Open();
       SqlCommand cmd = new SqlCommand ("INSERT INTO authors_books (author_id, book_id) VALUES (@AuthorId, @BookId);", conn);
       SqlParameter authorIdParameter = new SqlParameter();
@@ -111,13 +111,13 @@ namespace Library
         conn.Close();
       }
     }
-    public static List<Author> GetAuthors()
+    public List<Author> GetAuthors()
     {
       List<Author> allAuthors = new List<Author> {};
       SqlConnection conn = DB.Connection();
       conn.Open();
       SqlDataReader rdr = null;
-      SqlCommand cmd = new SqlCommand ("SELECT authors.* FROM books JOIN authors ON (authors.id = authors_books.author_id) JOIN authors_books ON (books.id = authors_books.book_id) WHERE books.id = @BookId;", conn);
+      SqlCommand cmd = new SqlCommand ("SELECT authors.* FROM books JOIN authors_books ON (books.id = authors_books.book_id) JOIN authors ON (authors.id = authors_books.author_id) WHERE books.id = @BookId;", conn);
       SqlParameter bookIdParameter = new SqlParameter();
       bookIdParameter.ParameterName = "@BookId";
       bookIdParameter.Value = this.GetId();

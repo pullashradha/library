@@ -90,7 +90,7 @@ namespace Library
     }
     public void AddBook(Book newBook)
     {
-      SqlConnection conn = DB.Connection;
+      SqlConnection conn = DB.Connection();
       conn.Open();
       SqlCommand cmd = new SqlCommand ("INSERT INTO authors_books (author_id, book_id) VALUES (@AuthorId, @BookId);", conn);
       SqlParameter authorIdParameter = new SqlParameter();
