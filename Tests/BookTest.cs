@@ -58,7 +58,7 @@ namespace Library
       Book testBook1 = new Book("Redwall");
       testBook1.Save();
 
-      Book result = Book.Find(testBook1.GetTitle());
+      Book result = Book.Find(testBook1.GetId());
 
       Assert.Equal(testBook1, result);
     }
@@ -70,7 +70,7 @@ namespace Library
       newBook.SetTitle("Redwall!!");
       newBook.Update();
 
-      Book updatedBook = Book.Find("Redwall!!");
+      Book updatedBook = Book.Find(newBook.GetId());
 
       Assert.Equal(newBook.GetTitle(), updatedBook.GetTitle());
     }
@@ -85,7 +85,7 @@ namespace Library
       List<Book> newList = Book.GetAll();
 
       newBook1.DeleteOne();
-      
+
       List<Book> resultList = Book.GetAll();
       List<Book> testList = new List<Book> {newBook2};
 
