@@ -80,7 +80,11 @@ namespace Library
       conn.Open();
       SqlDataReader rdr = null;
 
-      SqlCommand cmd = new SqlCommand ("INSERT INTO copies (condition, book_id) OUTPUT INSERTED.id VALUES (@CopyCondition, @BookId);", conn);
+      SqlCommand cmd = new SqlCommand ("INSERT INTO copies (checkout_date, condition, book_id, due_date) OUTPUT INSERTED.id VALUES (@CheckoutDate, @CopyCondition, @BookId, @DueDate);", conn);
+
+      SqlParameter checkoutDateParameter = new SqlParameter ();
+      checkoutDateParameter.ParameterName = ("@CheckoutDate");
+      checkoutDateParameter.Value = this.GetCheckoutDate();
 
       SqlParameter conditionParameter = new SqlParameter ();
       conditionParameter.ParameterName = "@CopyCondition";
@@ -90,8 +94,14 @@ namespace Library
       bookIdParameter.ParameterName = "@BookId";
       bookIdParameter.Value = this.GetBookId();
 
+      SqlParameter dueDateParameter = new SqlParameter ();
+      dueDateParameter.ParameterName = "@DueDate";
+      dueDateParameter.Value = this.GetDueDate();
+
+      cmd.Parameters.Add(checkoutDateParameter);
       cmd.Parameters.Add(conditionParameter);
       cmd.Parameters.Add(bookIdParameter);
+      cmd.Parameters.Add(dueDateParameter);
 
       rdr = cmd.ExecuteReader();
 
@@ -122,9 +132,11 @@ namespace Library
       while (rdr.Read())
       {
         int copyId = rdr.GetInt32(0);
-        string copyCondition = rdr.GetString(1);
-        int bookId = rdr.GetInt32(2);
-        Copy newCopy = new Copy (copyCondition, bookId, copyId);
+        DateTime? copyCheckoutDate = rdr.GetDateTime(1);
+        string copyCondition = rdr.GetString(2);
+        int bookId = rdr.GetInt32(3);
+        DateTime? copyDueDate = rdr.GetDateTime(4);
+        Copy newCopy = new Copy (copyCheckoutDate, copyCondition, bookId, copyDueDate, copyId);
 
         allCopies.Add(newCopy);
       }
@@ -158,9 +170,11 @@ namespace Library
       while (rdr.Read())
       {
         int copyId = rdr.GetInt32(0);
-        string copyCondition = rdr.GetString(1);
-        int bookId = rdr.GetInt32(2);
-        Copy newCopy = new Copy(copyCondition, bookId, copyId);
+        DateTime? copyCheckoutDate = rdr.GetDateTime(1);
+        string copyCondition = rdr.GetString(2);
+        int bookId = rdr.GetInt32(3);
+        DateTime? copyDueDate = rdr.GetDateTime(4);
+        Copy newCopy = new Copy (copyCheckoutDate, copyCondition, bookId, copyDueDate, copyId);
 
         foundCopy = newCopy;
       }
@@ -180,7 +194,11 @@ namespace Library
       conn.Open();
       SqlDataReader rdr = null;
 
-      SqlCommand cmd = new SqlCommand ("UPDATE copies SET condition = @CopyCondition WHERE id = @SearchId; UPDATE copies SET book_id = @BookId WHERE id = @SearchId;", conn);
+      SqlCommand cmd = new SqlCommand ("UPDATE copies SET checkout_date = @CheckoutDate WHERE id = @SearchId; UPDATE copies SET condition = @CopyCondition WHERE id = @SearchId; UPDATE copies SET book_id = @BookId WHERE id = @SearchId; UPDATE copies SET due_date = @DueDate WHERE id = @SearchId;", conn);
+
+      SqlParameter newCheckoutDateParameter = new SqlParameter();
+      newCheckoutDateParameter.ParameterName = "@CheckoutDate";
+      newCheckoutDateParameter.Value = this.GetCheckoutDate();
 
       SqlParameter newConditionParameter = new SqlParameter();
       newConditionParameter.ParameterName = "@CopyCondition";
@@ -190,12 +208,18 @@ namespace Library
       newBookIdParameter.ParameterName = "@BookId";
       newBookIdParameter.Value = this.GetBookId();
 
+      SqlParameter newDueDateParameter = new SqlParameter();
+      newDueDateParameter.ParameterName = "@DueDate";
+      newDueDateParameter.Value = this.GetDueDate();
+
       SqlParameter idParameter = new SqlParameter();
       idParameter.ParameterName = "@SearchId";
       idParameter.Value = this.GetId();
 
+      cmd.Parameters.Add(newCheckoutDateParameter);
       cmd.Parameters.Add(newConditionParameter);
       cmd.Parameters.Add(newBookIdParameter);
+      cmd.Parameters.Add(newDueDateParameter);
       cmd.Parameters.Add(idParameter);
 
       rdr = cmd.ExecuteReader();
