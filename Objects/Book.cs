@@ -231,7 +231,52 @@ namespace Library
       }
       return foundBook;
     }
-    
+    public static List<Book> FindByAuthor(string searchAuthor)
+    {
+      List<Book> resultList = new List<Book> {};
+      string bareAuthor = "";
+      foreach (char i in searchAuthor)
+      {
+        if (!char.IsPunctuation(i))
+        {
+          bareAuthor += i;
+        }
+      }
+      string[] bareCharArray = bareAuthor.Split(' ');
+      string bareSearchAuthor = "";
+      foreach (string thing in bareCharArray)
+      {
+        bareSearchAuthor += thing.ToLower();
+      }
+      List<Book> allBooks = Book.GetAll();
+      foreach (Book currentBook in allBooks)
+      {
+        List<Author> currentBookAuthors = currentBook.GetAuthors();
+        List<string> searchNames = new List<string> {};
+        foreach (Author currentAuthor in currentBookAuthors)
+        {
+          string[] bareStringies = currentAuthor.GetName().ToLower().Split(' ');
+          string bareSearchName = "";
+          foreach (string thingie in bareStringies)
+          {
+            bareSearchName += thingie;
+          }
+        }
+        for (var i = 0; i < searchNames.Count; i++)
+        {
+          List<Book> tempList = new List<Book>{};
+          if (searchNames[i].Contains(bareAuthor))
+          {
+            tempList = currentBookAuthors[i].GetBooks();
+            foreach (Book currentBookInList in tempList)
+            {
+              resultList.Add(currentBookInList);
+            }
+          }
+        }
+      }
+      return resultList;
+    }
     public void Update()
     {
       SqlConnection conn = DB.Connection();
