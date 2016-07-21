@@ -32,7 +32,7 @@ This program can only be accessed on a PC with Windows 10, and with Git, Atom, a
 
 ## Known Bugs
 
-* Search by author name only works if search is lowercase and has no extra punctuation
+No known bugs.
 
 ## Specifications
 
@@ -55,9 +55,7 @@ Update a patron's information | --- | ---
 View a patron | --- | ---
 View all patrons | --- | ---
 View the copies a patron has checked out | --- | ---
-
-
-Find a book from the catalog by author or title | --- | ---
+Find a book from the catalog by author | --- | ---
 
 ## Future Features
 

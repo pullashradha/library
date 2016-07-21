@@ -102,9 +102,7 @@ namespace Library
       testBook.AddAuthor(newAuthor);
 
       List<Book> testBookList = new List<Book> {testBook};
-      List<Book> resultBookList = Book.FindByAuthor("jacques");
-      Console.WriteLine(testBookList[0].GetTitle());
-      Console.WriteLine(resultBookList[0].GetTitle());
+      List<Book> resultBookList = Book.FindByAuthor("Jac.Ques");
 
       Assert.Equal(testBookList, resultBookList);
     }
