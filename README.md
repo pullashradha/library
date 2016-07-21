@@ -32,7 +32,7 @@ This program can only be accessed on a PC with Windows 10, and with Git, Atom, a
 
 ## Known Bugs
 
-No known bugs.
+* Search by author name only works if search is lowercase and has no extra punctuation
 
 ## Specifications
 

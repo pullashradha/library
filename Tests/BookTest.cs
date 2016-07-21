@@ -103,21 +103,11 @@ namespace Library
 
       List<Book> testBookList = new List<Book> {testBook};
       List<Book> resultBookList = Book.FindByAuthor("jacques");
-      Console.WriteLine(testBookList[0]);
-      Console.WriteLine(resultBookList[0]);
+      Console.WriteLine(testBookList[0].GetTitle());
+      Console.WriteLine(resultBookList[0].GetTitle());
 
       Assert.Equal(testBookList, resultBookList);
     }
-    // [Fact]
-    // public void Test_FindByTitle_FindsBookByTitle()
-    // {
-    //   Book testBook = new Book ("Redwall");
-    //   testBook.Save();
-    //
-    //   Book resultBook = Book.FindByTitle(testBook.GetTitle());
-    //
-    //   Assert.Equal(testBook, resultBook);
-    // }
     [Fact]
     public void Test_Update_UpdatesBookInDatabase()
     {

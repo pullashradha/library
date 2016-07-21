@@ -231,7 +231,7 @@ namespace Library
       }
       return foundBook;
     }
-    public static List<Book> FindByAuthor(string searchAuthor)
+    public static List<Book> FindByAuthor (string searchAuthor)
     {
       List<Book> resultList = new List<Book> {};
       string bareAuthor = "";
@@ -243,11 +243,14 @@ namespace Library
         }
       }
       string[] bareCharArray = bareAuthor.Split(' ');
+      // Search by This //
       string bareSearchAuthor = "";
+      // -------------------------------//
       foreach (string thing in bareCharArray)
       {
         bareSearchAuthor += thing.ToLower();
       }
+      Console.WriteLine(bareSearchAuthor);
       List<Book> allBooks = Book.GetAll();
       foreach (Book currentBook in allBooks)
       {
@@ -261,7 +264,9 @@ namespace Library
           {
             bareSearchName += thingie;
           }
+          searchNames.Add(bareSearchName);
         }
+        Console.WriteLine(searchNames[0]);
         for (var i = 0; i < searchNames.Count; i++)
         {
           List<Book> tempList = new List<Book>{};
