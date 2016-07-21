@@ -60,7 +60,7 @@ Find a book from the catalog by author | --- | ---
 ## Future Features
 
 HTML | CSS | C#
------ | ----- | -----
+----- | ----- | Find a book from the catalog by the title
 ----- | ----- | -----
 
 ## Support and Contact Details

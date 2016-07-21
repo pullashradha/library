@@ -246,9 +246,9 @@ namespace Library
       // Search by This //
       string bareSearchAuthor = "";
 
-      foreach (string thing in bareCharArray)
+      foreach (string character in bareCharArray)
       {
-        bareSearchAuthor += thing.ToLower();
+        bareSearchAuthor += character.ToLower();
       }
       List<Book> allBooks = Book.GetAll();
       foreach (Book currentBook in allBooks)
@@ -257,17 +257,17 @@ namespace Library
         List<string> searchNames = new List<string> {};
         foreach (Author currentAuthor in currentBookAuthors)
         {
-          string[] bareStringies = currentAuthor.GetName().ToLower().Split(' ');
+          string[] bareAuthorString = currentAuthor.GetName().ToLower().Split(' ');
           string bareSearchName = "";
-          foreach (string thingie in bareStringies)
+          foreach (string singleAuthor in bareAuthorString)
           {
-            bareSearchName += thingie;
+            bareSearchName += singleAuthor;
           }
           searchNames.Add(bareSearchName);
         }
         for (var i = 0; i < searchNames.Count; i++)
         {
-          List<Book> tempList = new List<Book>{};
+          List<Book> tempList = new List<Book> {};
           if (searchNames[i].Contains(bareSearchAuthor))
           {
             tempList = currentBookAuthors[i].GetBooks();
