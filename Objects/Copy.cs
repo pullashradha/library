@@ -12,7 +12,7 @@ namespace Library
     private int _bookId;
     private DateTime? _dueDate;
 
-    public Copy (DateTime? CheckoutDate = (0,0,0), string Condition, int BookId, DateTime? DueDate = (0,0,0), int Id = 0)
+    public Copy (DateTime? CheckoutDate, string Condition, int BookId, DateTime? DueDate, int Id = 0)
     {
       _id = Id;
       _checkoutDate = CheckoutDate;
@@ -152,7 +152,7 @@ namespace Library
     }
     public static Copy Find (int searchId)
     {
-      Copy foundCopy = new Copy("", 0); //Program needs some value inside a Copy object
+      Copy foundCopy = new Copy(new DateTime(0), "", 0, new DateTime(0)); //Program needs some value inside a Copy object
       SqlConnection conn = DB.Connection();
       conn.Open();
       SqlDataReader rdr = null;
