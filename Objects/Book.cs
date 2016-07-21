@@ -231,6 +231,7 @@ namespace Library
       }
       return foundBook;
     }
+    
     public void Update()
     {
       SqlConnection conn = DB.Connection();

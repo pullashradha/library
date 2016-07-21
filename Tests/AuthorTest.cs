@@ -28,7 +28,7 @@ namespace Library
       Assert.Equal(testAuthor1, testAuthor2);
     }
     [Fact]
-    public void Test_GetAll_RetrieveAllAuthors()
+    public void Test_GetAll_RetrievesAllAuthors()
     {
       Author testAuthor1 = new Author ("Brian Jacques");
       Author testAuthor2 = new Author ("Anne Rice");
@@ -53,7 +53,7 @@ namespace Library
       Assert.Equal(2, resultCount);
     }
     [Fact]
-    public void Test_AddBook_AddABookToAnAuthor()
+    public void Test_AddBook_AddsBookToAuthor()
     {
       Author newAuthor = new Author ("Brian Jacques");
       newAuthor.Save();
@@ -67,7 +67,7 @@ namespace Library
       Assert.Equal(testBook, allBooks);
     }
     [Fact]
-    public void Test_Find_FindAuthorInDatabase()
+    public void Test_Find_FindsAuthorInDatabase()
     {
       Author testAuthor1 = new Author ("Brian Jacques");
       testAuthor1.Save();
@@ -77,7 +77,7 @@ namespace Library
       Assert.Equal(testAuthor1, result);
     }
     [Fact]
-    public void Test_Update_UpdateAuthorInDatabase()
+    public void Test_Update_UpdatesAuthorInDatabase()
     {
       Author newAuthor = new Author ("Brian Jacques");
       newAuthor.Save();
