@@ -22,16 +22,16 @@ namespace Library
     [Fact]
     public void Test_Equal_EntriesMatch()
     {
-     Copy testCopy1 = new Copy ("New", 1);
-     Copy testCopy2 = new Copy ("New", 1);
+     Copy testCopy1 = new Copy (new DateTime (2016, 7, 25), "New", 1, new DateTime (2016, 8, 25));
+     Copy testCopy2 = new Copy (new DateTime (2016, 7, 25), "New", 1, new DateTime (2016, 8, 25));
 
       Assert.Equal(testCopy1, testCopy2);
     }
     [Fact]
     public void Test_GetAll_RetrieveAllCopies()
     {
-     Copy testCopy1 = new Copy ("New", 1);
-     Copy testCopy2 = new Copy ("Worn & Torn", 2);
+     Copy testCopy1 = new Copy (new DateTime (2016, 7, 25), "New", 1, new DateTime (2016, 8, 25));
+     Copy testCopy2 = new Copy (new DateTime (2016, 7, 25), "Worn & Torn", 2, new DateTime (2016, 8, 25));
      testCopy1.Save();
      testCopy2.Save();
 
@@ -43,8 +43,8 @@ namespace Library
     [Fact]
     public void Test_Save_SavesCopiesToDatabase()
     {
-     Copy newCopy1 = new Copy ("New", 1);
-     Copy newCopy2 = new Copy ("Worn & Torn", 2);
+     Copy newCopy1 = new Copy (new DateTime (2016, 7, 25), "New", 1, new DateTime (2016, 8, 25));
+     Copy newCopy2 = new Copy (new DateTime (2016, 7, 25), "Worn & Torn", 2, new DateTime (2016, 8, 25));
      newCopy1.Save();
      newCopy2.Save();
 
@@ -55,7 +55,7 @@ namespace Library
     [Fact]
     public void Test_Find_FindCopyInDatabase()
     {
-     Copy testCopy1 = new Copy ("New", 1);
+     Copy testCopy1 = new Copy (new DateTime (2016, 7, 25), "New", 1, new DateTime (2016, 8, 25));
      testCopy1.Save();
 
      Copy result = Copy.Find(testCopy1.GetId());
@@ -65,9 +65,9 @@ namespace Library
     [Fact]
     public void Test_Update_UpdateCopyInDatabase()
     {
-     Copy newCopy = new Copy ("New", 1);
+     Copy newCopy = new Copy (new DateTime (2016, 7, 25), "New", 1, new DateTime (2016, 8, 25));
      newCopy.Save();
-     newCopy.SetCondition("New!!");
+     newCopy.SetCondition("Worn & Torn");
      newCopy.Update();
 
      Copy updatedCopy = Copy.Find(newCopy.GetId());
@@ -78,8 +78,8 @@ namespace Library
     public void Test_DeleteOne_DeletesOneCopy()
     {
 
-     Copy newCopy1 = new Copy ("New", 1);
-     Copy newCopy2 = new Copy ("Worn & Torn", 2);
+     Copy newCopy1 = new Copy (new DateTime (2016, 7, 25), "New", 1, new DateTime (2016, 8, 25));
+     Copy newCopy2 = new Copy (new DateTime (2016, 7, 25), "Worn & Torn", 2, new DateTime (2016, 8, 25));
      newCopy1.Save();
      newCopy2.Save();
      List<Copy> newList = Copy.GetAll();

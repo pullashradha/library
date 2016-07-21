@@ -12,7 +12,7 @@ namespace Library
     private int _bookId;
     private DateTime? _dueDate;
 
-    public Copy (DateTime? CheckoutDate, string Condition, int BookId, DateTime? DueDate, int Id = 0)
+    public Copy (DateTime? CheckoutDate = (0,0,0), string Condition, int BookId, DateTime? DueDate = (0,0,0), int Id = 0)
     {
       _id = Id;
       _checkoutDate = CheckoutDate;

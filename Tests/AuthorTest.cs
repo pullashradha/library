@@ -81,7 +81,7 @@ namespace Library
     {
       Author newAuthor = new Author ("Brian Jacques");
       newAuthor.Save();
-      newAuthor.SetName("Brian Jacques!!");
+      newAuthor.SetName("Brian Jacques & Brian Jacques");
       newAuthor.Update();
 
       Author updatedAuthor = Author.Find(newAuthor.GetId());

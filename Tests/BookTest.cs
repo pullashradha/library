@@ -81,7 +81,7 @@ namespace Library
     {
       Book newBook = new Book ("Redwall");
       newBook.Save();
-      newBook.SetTitle("Redwall!!");
+      newBook.SetTitle("Redwall: A Journey");
       newBook.Update();
 
       Book updatedBook = Book.Find(newBook.GetId());
