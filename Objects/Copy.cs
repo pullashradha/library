@@ -7,18 +7,30 @@ namespace Library
   public class Copy
   {
     private int _id;
+    private DateTime? _checkoutDate;
     private string _condition;
     private int _bookId;
+    private DateTime? _dueDate;
 
-    public Copy (string Condition, int BookId, int Id = 0)
+    public Copy (DateTime? CheckoutDate, string Condition, int BookId, DateTime? DueDate, int Id = 0)
     {
       _id = Id;
+      _checkoutDate = CheckoutDate;
       _condition = Condition;
       _bookId = BookId;
+      _dueDate = DueDate;
     }
     public int GetId()
     {
       return _id;
+    }
+    public DateTime? GetCheckoutDate()
+    {
+      return _checkoutDate;
+    }
+    public void SetCheckoutDate (DateTime? newCheckoutDate)
+    {
+      _checkoutDate = newCheckoutDate;
     }
     public string GetCondition()
     {
@@ -36,16 +48,26 @@ namespace Library
     {
       _bookId = newBookId;
     }
+    public DateTime? GetDueDate()
+    {
+      return _dueDate;
+    }
+    public void SetDueDate (DateTime? newDueDate)
+    {
+      _dueDate = newDueDate;
+    }
     public override bool Equals (System.Object otherCopy)
     {
       if (otherCopy is Copy)
       {
         Copy testCopy = (Copy) otherCopy;
         bool idEquality = (this.GetId() == testCopy.GetId());
+        bool checkoutDateEquality = (this.GetCheckoutDate() == testCopy.GetCheckoutDate());
         bool conditionEquality = (this.GetCondition() == testCopy.GetCondition());
         bool bookIdEquality = (this.GetBookId() == testCopy.GetBookId());
+        bool dueDateEquality = (this.GetDueDate() == testCopy.GetDueDate());
 
-        return (idEquality && conditionEquality && bookIdEquality);
+        return (idEquality && checkoutDateEquality && conditionEquality && bookIdEquality && dueDateEquality);
       }
       else
       {
@@ -212,7 +234,7 @@ namespace Library
       conn.Open();
 
       SqlCommand cmd = new SqlCommand ("DELETE FROM copies;", conn);
-      
+
       cmd.ExecuteNonQuery();
     }
   }

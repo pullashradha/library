@@ -10,7 +10,7 @@ namespace Library
     private string _firstName;
     private string _lastName;
     private string _phoneNumber;
-    
+
     public Patron (string FirstName, string LastName, string PhoneNumber, int Id = 0)
     {
       _id = Id;
@@ -133,33 +133,41 @@ namespace Library
       }
       return allPatrons;
     }
-    // public void AddCopy (Copy newCopy)
-    // {
-    //   SqlConnection conn = DB.Connection();
-    //   conn.Open();
-    //   SqlCommand cmd = new SqlCommand ("INSERT INTO checkouts (checkout_date, copy_id, patron_id, due_date) VALUES (@CheckoutDate, @CopyId, @PatronId, @DueDate);", conn);
-    //   SqlParameter checkoutDateIdParameter = new SqlParameter();
-    //   checkoutDateIdParameter.ParameterName = "@CheckoutDate";
-    //   checkoutDateIdParameter.Value =;
-    //   SqlParameter copyIdParameter = new SqlParameter();
-    //   copyIdParameter.ParameterName = "@CopyId";
-    //   copyIdParameter.Value = newCopy.GetId();
-    //   SqlParameter patronIdParameter = new SqlParameter();
-    //   patronIdParameter.ParameterName = "@PatronId";
-    //   patronIdParameter.Value = this.GetId();
-    //   SqlParameter dueDateIdParameter = new SqlParameter();
-    //   dueDateIdParameter.ParameterName = "@DueDate";
-    //   dueDateIdParameter.Value =;
-    //   cmd.Parameters.Add(checkoutDateIdParameter);
-    //   cmd.Parameters.Add(copyIdParameter);
-    //   cmd.Parameters.Add(patronIdParameter);
-    //   cmd.Parameters.Add(dueDateIdParameter);
-    //   cmd.ExecuteNonQuery();
-    //   if (conn != null)
-    //   {
-    //     conn.Close();
-    //   }
-    // }
+    public void AddCopy (Copy newCopy)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand ("INSERT INTO checkouts (checkout_date, copy_id, patron_id, due_date) VALUES (@CheckoutDate, @CopyId, @PatronId, @DueDate);", conn);
+
+      SqlParameter checkoutDateIdParameter = new SqlParameter();
+      checkoutDateIdParameter.ParameterName = "@CheckoutDate";
+      checkoutDateIdParameter.Value = newCopy.GetCheckoutDate();
+
+      SqlParameter copyIdParameter = new SqlParameter();
+      copyIdParameter.ParameterName = "@CopyId";
+      copyIdParameter.Value = newCopy.GetId();
+
+      SqlParameter patronIdParameter = new SqlParameter();
+      patronIdParameter.ParameterName = "@PatronId";
+      patronIdParameter.Value = this.GetId();
+
+      SqlParameter dueDateIdParameter = new SqlParameter();
+      dueDateIdParameter.ParameterName = "@DueDate";
+      dueDateIdParameter.Value = newCopy.GetDueDate();
+
+      cmd.Parameters.Add(checkoutDateIdParameter);
+      cmd.Parameters.Add(copyIdParameter);
+      cmd.Parameters.Add(patronIdParameter);
+      cmd.Parameters.Add(dueDateIdParameter);
+
+      cmd.ExecuteNonQuery();
+
+      if (conn != null)
+      {
+        conn.Close();
+      }
+    }
     // public List<Copy> GetCopys()
     // {
     //   List<Copy> allCopys = new List<Copy> {};

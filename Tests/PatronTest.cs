@@ -52,20 +52,20 @@ namespace Library
 
       Assert.Equal(2, resultCount);
     }
-    // [Fact]
-    // public void Test_AddAuthor_AddAnAuthorToAPatron()
-    // {
-    //   Patron newPatron = new Patron ("Jane", "Doe", "555-555-5555");
-    //   newPatron.Save();
-    //   Author newAuthor = new Author ("Brian Jacques");
-    //   newAuthor.Save();
-    //   newPatron.AddAuthor(newAuthor);
-    //
-    //   List<Author> testAuthor = new List<Author> {newAuthor};
-    //   List<Author> allAuthors = newPatron.GetAuthors();
-    //
-    //   Assert.Equal(testAuthor, allAuthors);
-    // }
+    [Fact]
+    public void Test_AddCopy_AddAnCopyToAPatron()
+    {
+      Patron newPatron = new Patron ("Jane", "Doe", "555-555-5555");
+      newPatron.Save();
+      Copy newCopy = new Copy ("New", 1);
+      newCopy.Save();
+      newPatron.AddCopy(newCopy);
+
+      List<Copy> testCopy = new List<Copy> {newCopy};
+      List<Copy> allCopies = newPatron.GetCopies();
+
+      Assert.Equal(testCopy, allCopies);
+    }
     [Fact]
     public void Test_Find_FindPatronInDatabase()
     {
