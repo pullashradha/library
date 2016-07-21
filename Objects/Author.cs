@@ -8,7 +8,8 @@ namespace Library
   {
     private int _id;
     private string _name;
-    public Author(string Name, int Id = 0)
+    
+    public Author (string Name, int Id = 0)
     {
       _id = Id;
       _name = Name;
@@ -21,17 +22,18 @@ namespace Library
     {
       return _name;
     }
-    public void SetName(string NewName)
+    public void SetName (string NewName)
     {
       _name = NewName;
     }
-    public override bool Equals(System.Object otherAuthor)
+    public override bool Equals (System.Object otherAuthor)
     {
       if (otherAuthor is Author)
       {
         Author testAuthor = (Author) otherAuthor;
         bool idEquality = (this.GetId() == testAuthor.GetId());
         bool nameEquality = (this.GetName() == testAuthor.GetName());
+
         return (idEquality && nameEquality);
       }
       else
@@ -44,12 +46,17 @@ namespace Library
       SqlConnection conn = DB.Connection();
       conn.Open();
       SqlDataReader rdr = null;
+
       SqlCommand cmd = new SqlCommand ("INSERT INTO authors (name) OUTPUT INSERTED.id VALUES (@AuthorName);", conn);
+
       SqlParameter nameParameter = new SqlParameter ();
       nameParameter.ParameterName = "@AuthorName";
       nameParameter.Value = this.GetName();
+
       cmd.Parameters.Add(nameParameter);
+
       rdr = cmd.ExecuteReader();
+
       while (rdr.Read())
       {
         this._id = rdr.GetInt32(0);
@@ -69,8 +76,11 @@ namespace Library
       SqlConnection conn = DB.Connection();
       conn.Open();
       SqlDataReader rdr = null;
+
       SqlCommand cmd = new SqlCommand ("SELECT * FROM authors;", conn);
+
       rdr = cmd.ExecuteReader();
+
       while (rdr.Read())
       {
         int authorId = rdr.GetInt32(0);
@@ -92,15 +102,20 @@ namespace Library
     {
       SqlConnection conn = DB.Connection();
       conn.Open();
+
       SqlCommand cmd = new SqlCommand ("INSERT INTO authors_books (author_id, book_id) VALUES (@AuthorId, @BookId);", conn);
+
       SqlParameter authorIdParameter = new SqlParameter();
       authorIdParameter.ParameterName = "@AuthorId";
       authorIdParameter.Value = this.GetId();
+
       SqlParameter bookIdParameter = new SqlParameter();
       bookIdParameter.ParameterName = "@BookId";
       bookIdParameter.Value = newBook.GetId();
+
       cmd.Parameters.Add(authorIdParameter);
       cmd.Parameters.Add(bookIdParameter);
+
       cmd.ExecuteNonQuery();
 
       if (conn != null)
@@ -114,12 +129,17 @@ namespace Library
       SqlConnection conn = DB.Connection();
       conn.Open();
       SqlDataReader rdr = null;
+
       SqlCommand cmd = new SqlCommand ("SELECT books.* FROM books JOIN authors_books ON (books.id = authors_books.book_id) JOIN authors ON (authors.id = authors_books.author_id) WHERE authors.id = @AuthorId;", conn);
+
       SqlParameter authorIdParameter = new SqlParameter();
       authorIdParameter.ParameterName = "@AuthorId";
       authorIdParameter.Value = this.GetId();
+
       cmd.Parameters.Add(authorIdParameter);
+
       rdr = cmd.ExecuteReader();
+
       while (rdr.Read())
       {
         int bookId = rdr.GetInt32(0);
@@ -143,12 +163,17 @@ namespace Library
       SqlConnection conn = DB.Connection();
       conn.Open();
       SqlDataReader rdr = null;
-      SqlCommand cmd = new SqlCommand("SELECT * FROM authors WHERE id = @AuthorId;", conn);
+
+      SqlCommand cmd = new SqlCommand ("SELECT * FROM authors WHERE id = @AuthorId;", conn);
+
       SqlParameter idParameter = new SqlParameter();
       idParameter.ParameterName = "@AuthorId";
       idParameter.Value = searchId;
+
       cmd.Parameters.Add(idParameter);
+
       rdr = cmd.ExecuteReader();
+
       while (rdr.Read())
       {
         int authorId = rdr.GetInt32(0);
@@ -171,16 +196,22 @@ namespace Library
       SqlConnection conn = DB.Connection();
       conn.Open();
       SqlDataReader rdr = null;
+
       SqlCommand cmd = new SqlCommand ("UPDATE authors SET name = @AuthorName WHERE id = @SearchId;", conn);
+
       SqlParameter newNameParameter = new SqlParameter();
       newNameParameter.ParameterName = "@AuthorName";
       newNameParameter.Value = this.GetName();
+
       SqlParameter idParameter = new SqlParameter();
       idParameter.ParameterName = "@SearchId";
       idParameter.Value = this.GetId();
+
       cmd.Parameters.Add(newNameParameter);
       cmd.Parameters.Add(idParameter);
+
       rdr = cmd.ExecuteReader();
+
       while (rdr.Read())
       {
         this._id = rdr.GetInt32(0);
@@ -198,18 +229,24 @@ namespace Library
     {
       SqlConnection conn = DB.Connection();
       conn.Open();
+
       SqlCommand cmd = new SqlCommand ("DELETE FROM authors WHERE id = @AuthorId;", conn);
+
       SqlParameter idParameter = new SqlParameter();
       idParameter.ParameterName = "@AuthorId";
       idParameter.Value = this.GetId();
+
       cmd.Parameters.Add(idParameter);
+
       cmd.ExecuteNonQuery();
     }
     public static void DeleteAll()
     {
       SqlConnection conn = DB.Connection();
       conn.Open();
+
       SqlCommand cmd = new SqlCommand ("DELETE FROM authors;", conn);
+
       cmd.ExecuteNonQuery();
     }
   }

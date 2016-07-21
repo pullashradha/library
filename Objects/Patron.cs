@@ -10,7 +10,8 @@ namespace Library
     private string _firstName;
     private string _lastName;
     private string _phoneNumber;
-    public Patron(string FirstName, string LastName, string PhoneNumber, int Id = 0)
+    
+    public Patron (string FirstName, string LastName, string PhoneNumber, int Id = 0)
     {
       _id = Id;
       _firstName = FirstName;
@@ -25,7 +26,7 @@ namespace Library
     {
       return _firstName;
     }
-    public void SetFirstName(string NewFirstName)
+    public void SetFirstName (string NewFirstName)
     {
       _firstName = NewFirstName;
     }
@@ -33,7 +34,7 @@ namespace Library
     {
       return _lastName;
     }
-    public void SetLastName(string NewLastName)
+    public void SetLastName (string NewLastName)
     {
       _lastName = NewLastName;
     }
@@ -41,11 +42,11 @@ namespace Library
     {
       return _phoneNumber;
     }
-    public void SetPhoneNumber(string NewPhoneNumber)
+    public void SetPhoneNumber (string NewPhoneNumber)
     {
       _phoneNumber = NewPhoneNumber;
     }
-    public override bool Equals(System.Object otherPatron)
+    public override bool Equals (System.Object otherPatron)
     {
       if (otherPatron is Patron)
       {
@@ -54,6 +55,7 @@ namespace Library
         bool firstNameEquality = (this.GetFirstName() == testPatron.GetFirstName());
         bool lastNameEquality = (this.GetLastName() == testPatron.GetLastName());
         bool phoneNumberEquality = (this.GetPhoneNumber() == testPatron.GetPhoneNumber());
+
         return (idEquality && firstNameEquality && lastNameEquality && phoneNumberEquality);
       }
       else
@@ -66,7 +68,9 @@ namespace Library
       SqlConnection conn = DB.Connection();
       conn.Open();
       SqlDataReader rdr = null;
+
       SqlCommand cmd = new SqlCommand ("INSERT INTO patrons (first_name, last_name, phone_number) OUTPUT INSERTED.id VALUES (@PatronFirstName, @PatronLastName, @PatronPhoneNumber);", conn);
+
       SqlParameter firstNameParameter = new SqlParameter ();
       firstNameParameter.ParameterName = "@PatronFirstName";
       firstNameParameter.Value = this.GetFirstName();
@@ -82,7 +86,9 @@ namespace Library
       cmd.Parameters.Add(firstNameParameter);
       cmd.Parameters.Add(lastNameParameter);
       cmd.Parameters.Add(phoneNumberParameter);
+
       rdr = cmd.ExecuteReader();
+
       while (rdr.Read())
       {
         this._id = rdr.GetInt32(0);
@@ -102,8 +108,11 @@ namespace Library
       SqlConnection conn = DB.Connection();
       conn.Open();
       SqlDataReader rdr = null;
+
       SqlCommand cmd = new SqlCommand ("SELECT * FROM patrons;", conn);
+
       rdr = cmd.ExecuteReader();
+
       while (rdr.Read())
       {
         int patronId = rdr.GetInt32(0);
@@ -111,6 +120,7 @@ namespace Library
         string patronLastName = rdr.GetString(2);
         string phoneNumber = rdr.GetString(3);
         Patron newPatron = new Patron (patronFirstName, patronLastName, phoneNumber, patronId);
+
         allPatrons.Add(newPatron);
       }
       if (rdr != null)
@@ -181,16 +191,21 @@ namespace Library
     // }
     public static Patron Find (int searchId)
     {
-      Patron foundPatron = new Patron(""); //Program needs some value inside a Patron object
+      Patron foundPatron = new Patron ("", "", ""); //Program needs some value inside a Patron object
       SqlConnection conn = DB.Connection();
       conn.Open();
       SqlDataReader rdr = null;
-      SqlCommand cmd = new SqlCommand("SELECT * FROM patrons WHERE id = @PatronId;", conn);
+
+      SqlCommand cmd = new SqlCommand ("SELECT * FROM patrons WHERE id = @PatronId;", conn);
+
       SqlParameter idParameter = new SqlParameter();
       idParameter.ParameterName = "@PatronId";
       idParameter.Value = searchId;
+
       cmd.Parameters.Add(idParameter);
+
       rdr = cmd.ExecuteReader();
+
       while (rdr.Read())
       {
         int patronId = rdr.GetInt32(0);
@@ -198,6 +213,7 @@ namespace Library
         string patronLastName = rdr.GetString(2);
         string patronPhoneNumber = rdr.GetString(3);
         Patron newPatron = new Patron(patronFirstName, patronLastName, patronPhoneNumber, patronId);
+
         foundPatron = newPatron;
       }
       if (rdr != null)
@@ -215,7 +231,9 @@ namespace Library
       SqlConnection conn = DB.Connection();
       conn.Open();
       SqlDataReader rdr = null;
+
       SqlCommand cmd = new SqlCommand ("UPDATE patrons SET first_name = @PatronFirstName WHERE id = @SearchId; UPDATE patrons SET last_name = @PatronLastName WHERE id = @SearchId; UPDATE patrons SET phone_number = @PatronPhoneNumber WHERE id = @SearchId;", conn);
+
       SqlParameter newFirstNameParameter = new SqlParameter ();
       newFirstNameParameter.ParameterName = "@PatronFirstName";
       newFirstNameParameter.Value = this.GetFirstName();
@@ -236,7 +254,9 @@ namespace Library
       cmd.Parameters.Add(newLastNameParameter);
       cmd.Parameters.Add(newPhoneNumberParameter);
       cmd.Parameters.Add(idParameter);
+
       rdr = cmd.ExecuteReader();
+
       while (rdr.Read())
       {
         this._id = rdr.GetInt32(0);
@@ -254,18 +274,24 @@ namespace Library
     {
       SqlConnection conn = DB.Connection();
       conn.Open();
+
       SqlCommand cmd = new SqlCommand ("DELETE FROM patrons WHERE id = @PatronId;", conn);
+
       SqlParameter idParameter = new SqlParameter();
       idParameter.ParameterName = "@PatronId";
       idParameter.Value = this.GetId();
+
       cmd.Parameters.Add(idParameter);
+
       cmd.ExecuteNonQuery();
     }
     public static void DeleteAll()
     {
       SqlConnection conn = DB.Connection();
       conn.Open();
+
       SqlCommand cmd = new SqlCommand ("DELETE FROM patrons;", conn);
+
       cmd.ExecuteNonQuery();
     }
   }

@@ -22,20 +22,20 @@ namespace Library
     [Fact]
     public void Test_Equal_EntriesMatch()
     {
-      Book testBook1 = new Book("Redwall");
-      Book testBook2 = new Book("Redwall");
+      Book testBook1 = new Book ("Redwall");
+      Book testBook2 = new Book ("Redwall");
 
       Assert.Equal(testBook1, testBook2);
     }
     [Fact]
     public void Test_GetAll_RetrieveAllBooks()
     {
-      Book testBook1 = new Book("Redwall");
-      Book testBook2 = new Book("Memnoch the Devil");
+      Book testBook1 = new Book ("Redwall");
+      Book testBook2 = new Book ("Memnoch the Devil");
       testBook1.Save();
       testBook2.Save();
 
-      List<Book> testList = new List<Book>{testBook1, testBook2};
+      List<Book> testList = new List<Book> {testBook1, testBook2};
       List<Book> result = Book.GetAll();
 
       Assert.Equal(testList, result);
@@ -43,8 +43,8 @@ namespace Library
     [Fact]
     public void Test_Save_SavesBooksToDatabase()
     {
-      Book newBook1 = new Book("Redwall");
-      Book newBook2 = new Book("Memnoch the Devil");
+      Book newBook1 = new Book ("Redwall");
+      Book newBook2 = new Book ("Memnoch the Devil");
       newBook1.Save();
       newBook2.Save();
 
@@ -55,9 +55,9 @@ namespace Library
     [Fact]
     public void Test_AddAuthor_AddAnAuthorToABook()
     {
-      Book newBook = new Book("Redwall");
+      Book newBook = new Book ("Redwall");
       newBook.Save();
-      Author newAuthor = new Author("Brian Jacques");
+      Author newAuthor = new Author ("Brian Jacques");
       newAuthor.Save();
       newBook.AddAuthor(newAuthor);
 
@@ -69,7 +69,7 @@ namespace Library
     [Fact]
     public void Test_Find_FindBookInDatabase()
     {
-      Book testBook1 = new Book("Redwall");
+      Book testBook1 = new Book ("Redwall");
       testBook1.Save();
 
       Book result = Book.Find(testBook1.GetId());
@@ -79,7 +79,7 @@ namespace Library
     [Fact]
     public void Test_Update_UpdateBookInDatabase()
     {
-      Book newBook = new Book("Redwall");
+      Book newBook = new Book ("Redwall");
       newBook.Save();
       newBook.SetTitle("Redwall!!");
       newBook.Update();
@@ -92,8 +92,8 @@ namespace Library
     public void Test_DeleteOne_DeletesOneBook()
     {
 
-      Book newBook1 = new Book("Redwall");
-      Book newBook2 = new Book("Memnoch the Devil");
+      Book newBook1 = new Book ("Redwall");
+      Book newBook2 = new Book ("Memnoch the Devil");
       newBook1.Save();
       newBook2.Save();
       List<Book> newList = Book.GetAll();

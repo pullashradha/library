@@ -22,20 +22,20 @@ namespace Library
     [Fact]
     public void Test_Equal_EntriesMatch()
     {
-     Copy testCopy1 = new Copy("New", 1);
-     Copy testCopy2 = new Copy("New", 1);
+     Copy testCopy1 = new Copy ("New", 1);
+     Copy testCopy2 = new Copy ("New", 1);
 
       Assert.Equal(testCopy1, testCopy2);
     }
     [Fact]
     public void Test_GetAll_RetrieveAllCopies()
     {
-     Copy testCopy1 = new Copy("New", 1);
-     Copy testCopy2 = new Copy("Worn & Torn", 2);
+     Copy testCopy1 = new Copy ("New", 1);
+     Copy testCopy2 = new Copy ("Worn & Torn", 2);
      testCopy1.Save();
      testCopy2.Save();
 
-      List<Copy> testList = new List<Copy>{testCopy1, testCopy2};
+      List<Copy> testList = new List<Copy> {testCopy1, testCopy2};
       List<Copy> result = Copy.GetAll();
 
       Assert.Equal(testList, result);
@@ -43,8 +43,8 @@ namespace Library
     [Fact]
     public void Test_Save_SavesCopiesToDatabase()
     {
-     Copy newCopy1 = new Copy("New", 1);
-     Copy newCopy2 = new Copy("Worn & Torn", 2);
+     Copy newCopy1 = new Copy ("New", 1);
+     Copy newCopy2 = new Copy ("Worn & Torn", 2);
      newCopy1.Save();
      newCopy2.Save();
 
@@ -55,7 +55,7 @@ namespace Library
     [Fact]
     public void Test_Find_FindCopyInDatabase()
     {
-     Copy testCopy1 = new Copy("New", 1);
+     Copy testCopy1 = new Copy ("New", 1);
      testCopy1.Save();
 
      Copy result = Copy.Find(testCopy1.GetId());
@@ -65,7 +65,7 @@ namespace Library
     [Fact]
     public void Test_Update_UpdateCopyInDatabase()
     {
-     Copy newCopy = new Copy("New", 1);
+     Copy newCopy = new Copy ("New", 1);
      newCopy.Save();
      newCopy.SetCondition("New!!");
      newCopy.Update();
@@ -78,8 +78,8 @@ namespace Library
     public void Test_DeleteOne_DeletesOneCopy()
     {
 
-     Copy newCopy1 = new Copy("New", 1);
-     Copy newCopy2 = new Copy("Worn & Torn", 2);
+     Copy newCopy1 = new Copy ("New", 1);
+     Copy newCopy2 = new Copy ("Worn & Torn", 2);
      newCopy1.Save();
      newCopy2.Save();
      List<Copy> newList = Copy.GetAll();
