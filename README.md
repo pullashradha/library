@@ -18,6 +18,10 @@ This program can only be accessed on a PC with Windows 10, and with Git, Atom, a
   * Select the following buttons from the top nav bar to open the database scripts file: File>Open>File>"Desktop\Library\Sql Databases\library.sql"
   * Save the library.sql file
   * To create the database: click the "!Execute" button on the top nav bar
+  * To create the database another way type the following into the top of the sql file:
+    * CREATE DATABASE library
+    * GO
+  * Refresh SSMS
   * Repeat the above steps to import the test database
 * Test the program:
   * Type following command into PowerShell > dnx test

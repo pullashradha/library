@@ -216,25 +216,25 @@ namespace Library
       conn.Open();
       SqlDataReader rdr = null;
       SqlCommand cmd = new SqlCommand ("UPDATE patrons SET first_name = @PatronFirstName WHERE id = @SearchId; UPDATE patrons SET last_name = @PatronLastName WHERE id = @SearchId; UPDATE patrons SET phone_number = @PatronPhoneNumber WHERE id = @SearchId;", conn);
-      SqlParameter firstNameParameter = new SqlParameter ();
-      firstNameParameter.ParameterName = "@PatronFirstName";
-      firstNameParameter.Value = this.GetFirstName();
+      SqlParameter newFirstNameParameter = new SqlParameter ();
+      newFirstNameParameter.ParameterName = "@PatronFirstName";
+      newFirstNameParameter.Value = this.GetFirstName();
 
-      SqlParameter lastNameParameter = new SqlParameter ();
-      lastNameParameter.ParameterName = "@PatronLastName";
-      lastNameParameter.Value = this.GetLastName();
+      SqlParameter newLastNameParameter = new SqlParameter ();
+      newLastNameParameter.ParameterName = "@PatronLastName";
+      newLastNameParameter.Value = this.GetLastName();
 
-      SqlParameter phoneNumberParameter = new SqlParameter ();
-      phoneNumberParameter.ParameterName = "@PatronPhoneNumber";
-      phoneNumberParameter.Value = this.GetPhoneNumber();
+      SqlParameter newPhoneNumberParameter = new SqlParameter ();
+      newPhoneNumberParameter.ParameterName = "@PatronPhoneNumber";
+      newPhoneNumberParameter.Value = this.GetPhoneNumber();
 
       SqlParameter idParameter = new SqlParameter();
       idParameter.ParameterName = "@SearchId";
       idParameter.Value = this.GetId();
 
-      cmd.Parameters.Add(firstNameParameter);
-      cmd.Parameters.Add(lastNameParameter);
-      cmd.Parameters.Add(phoneNumberParameter);
+      cmd.Parameters.Add(newFirstNameParameter);
+      cmd.Parameters.Add(newLastNameParameter);
+      cmd.Parameters.Add(newPhoneNumberParameter);
       cmd.Parameters.Add(idParameter);
       rdr = cmd.ExecuteReader();
       while (rdr.Read())
