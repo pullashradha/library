@@ -8,7 +8,7 @@ namespace Library
   {
     private int _id;
     private string _title;
-    
+
     public Book (string Title, int Id = 0)
     {
       _id = Id;
@@ -157,6 +157,45 @@ namespace Library
         conn.Close();
       }
       return allAuthors;
+    }
+    public List<Copy> GetCopies()
+    {
+      List<Copy> allCopies = new List<Copy> {};
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+      SqlDataReader rdr = null;
+
+      SqlCommand cmd = new SqlCommand ("SELECT * FROM copies WHERE book_id = @BookId;", conn);
+
+      SqlParameter bookIdParameter = new SqlParameter ();
+      bookIdParameter.ParameterName = "@BookId";
+      bookIdParameter.Value = this.GetId();
+
+      cmd.Parameters.Add(bookIdParameter);
+
+      rdr = cmd.ExecuteReader();
+
+      while (rdr.Read())
+      {
+        int copyId = rdr.GetInt32(0);
+        DateTime copyCheckoutDate = rdr.GetDateTime(1);
+        string copyCondition = rdr.GetString(2);
+        int copyBookId = rdr.GetInt32(3);
+        DateTime copyDueDate = rdr.GetDateTime(4);
+
+        Copy newCopy = new Copy (copyCondition, copyBookId, copyCheckoutDate, copyDueDate, copyId);
+
+        allCopies.Add(newCopy);
+      }
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+      return allCopies;
     }
     public static Book Find (int searchId)
     {

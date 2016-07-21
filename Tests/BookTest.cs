@@ -89,6 +89,21 @@ namespace Library
       Assert.Equal(newBook.GetTitle(), updatedBook.GetTitle());
     }
     [Fact]
+    public void Test_GetCopies_ReturnsAllCopiesForBook()
+    {
+      Book testBook = new Book ("Redwall");
+      testBook.Save();
+      Copy newCopy1 = new Copy ("New", testBook.GetId(), new DateTime(2016, 7, 25), new DateTime(2016, 8, 25));
+      Copy newCopy2 = new Copy ("Worn & Torn", testBook.GetId(), new DateTime(2016, 7, 25), new DateTime (2016, 8, 25));
+      newCopy1.Save();
+      newCopy2.Save();
+
+      List<Copy> testCopyList = new List<Copy> {newCopy1, newCopy2};
+      List<Copy> resultCopyList = testBook.GetCopies();
+
+      Assert.Equal(testCopyList, resultCopyList);
+    }
+    [Fact]
     public void Test_DeleteOne_DeletesOneBook()
     {
 
@@ -107,6 +122,7 @@ namespace Library
     }
     public void Dispose()
     {
+      Copy.DeleteAll();
       Author.DeleteAll();
       Book.DeleteAll();
     }

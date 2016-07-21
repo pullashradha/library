@@ -39,13 +39,25 @@ No known bugs.
 The program should ... | Example Input | Example Output
 ----- | ----- | -----
 Add a new book to the catalog | --- | ---
-Find a book from the catalog by author or title | --- | ---
 View a book from the catalog | --- | ---
+View all books in the catalog | --- | ---
 Update a book entry in the catalog | --- | ---
 Delete a book from the catalog | --- | ---
-Find how many copies of a book there are | --- | ---
-View all books in the catalog | --- | ---
 Add an author to a book | --- | ---
+View all authors for a book | --- | ---
+Delete an author from a book | --- | ---
+Add a copy to a book | --- | ---
+Update a copy | --- | ---
+Delete a copy | --- | ---
+Find how many copies of a book there are | --- | ---
+Add a patron to the database | --- | ---
+Update a patron's information | --- | ---
+View a patron | --- | ---
+View all patrons | --- | ---
+View the copies a patron has checked out | --- | ---
+
+
+Find a book from the catalog by author or title | --- | ---
 
 ## Future Features
 
