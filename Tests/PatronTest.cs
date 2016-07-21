@@ -52,20 +52,20 @@ namespace Library
 
       Assert.Equal(2, resultCount);
     }
-    // [Fact]
-    // public void Test_AddCopy_AddAnCopyToAPatron()
-    // {
-    //   Patron newPatron = new Patron ("Jane", "Doe", "555-555-5555");
-    //   newPatron.Save();
-    //   Copy newCopy = new Copy ("New", 1);
-    //   newCopy.Save();
-    //   newPatron.AddCopy(newCopy);
-    //
-    //   List<Copy> testCopy = new List<Copy> {newCopy};
-    //   List<Copy> allCopies = newPatron.GetCopies();
-    //
-    //   Assert.Equal(testCopy, allCopies);
-    // }
+    [Fact]
+    public void Test_AddCopy_AddAnCopyToAPatron()
+    {
+      Patron testPatron = new Patron ("Jane", "Doe", "555-555-5555");
+      testPatron.Save();
+      Copy newCopy = new Copy ("New", 1, new DateTime(2016, 7, 25), new DateTime(2016, 8, 25));
+      newCopy.Save();
+      testPatron.AddCopy(newCopy);
+
+      List<Copy> testCopy = new List<Copy> {newCopy};
+      List<Copy> allCopies = testPatron.GetCopies();
+
+      Assert.Equal(testCopy, allCopies);
+    }
     [Fact]
     public void Test_Find_FindPatronInDatabase()
     {
@@ -107,6 +107,7 @@ namespace Library
     }
     public void Dispose()
     {
+      Copy.DeleteAll();
       Patron.DeleteAll();
     }
   }

@@ -138,11 +138,7 @@ namespace Library
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand ("INSERT INTO checkouts (checkout_date, copy_id, patron_id, due_date) VALUES (@CheckoutDate, @CopyId, @PatronId, @DueDate);", conn);
-
-      SqlParameter checkoutDateIdParameter = new SqlParameter();
-      checkoutDateIdParameter.ParameterName = "@CheckoutDate";
-      checkoutDateIdParameter.Value = newCopy.GetCheckoutDate();
+      SqlCommand cmd = new SqlCommand ("INSERT INTO checkouts (copy_id, patron_id) VALUES (@CopyId, @PatronId);", conn);
 
       SqlParameter copyIdParameter = new SqlParameter();
       copyIdParameter.ParameterName = "@CopyId";
@@ -152,14 +148,8 @@ namespace Library
       patronIdParameter.ParameterName = "@PatronId";
       patronIdParameter.Value = this.GetId();
 
-      SqlParameter dueDateIdParameter = new SqlParameter();
-      dueDateIdParameter.ParameterName = "@DueDate";
-      dueDateIdParameter.Value = newCopy.GetDueDate();
-
-      cmd.Parameters.Add(checkoutDateIdParameter);
       cmd.Parameters.Add(copyIdParameter);
       cmd.Parameters.Add(patronIdParameter);
-      cmd.Parameters.Add(dueDateIdParameter);
 
       cmd.ExecuteNonQuery();
 
@@ -168,35 +158,43 @@ namespace Library
         conn.Close();
       }
     }
-    // public List<Copy> GetCopys()
-    // {
-    //   List<Copy> allCopys = new List<Copy> {};
-    //   SqlConnection conn = DB.Connection();
-    //   conn.Open();
-    //   SqlDataReader rdr = null;
-    //   SqlCommand cmd = new SqlCommand ("SELECT authors.* FROM patrons JOIN authors_patrons ON (patrons.id = authors_patrons.patron_id) JOIN authors ON (authors.id = authors_patrons.author_id) WHERE patrons.id = @PatronId;", conn);
-    //   SqlParameter patronIdParameter = new SqlParameter();
-    //   patronIdParameter.ParameterName = "@PatronId";
-    //   patronIdParameter.Value = this.GetId();
-    //   cmd.Parameters.Add(patronIdParameter);
-    //   rdr = cmd.ExecuteReader();
-    //   while (rdr.Read())
-    //   {
-    //     int authorId = rdr.GetInt32(0);
-    //     string authorName = rdr.GetString(1);
-    //     Copy newAuthor = new Author (authorName, authorId);
-    //     allAuthors.Add(newAuthor);
-    //   }
-    //   if (rdr != null)
-    //   {
-    //     rdr.Close();
-    //   }
-    //   if (conn != null)
-    //   {
-    //     conn.Close();
-    //   }
-    //   return allAuthors;
-    // }
+    public List<Copy> GetCopies()
+    {
+      List<Copy> allCopies = new List<Copy> {};
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+      SqlDataReader rdr = null;
+
+      SqlCommand cmd = new SqlCommand ("SELECT copies.* FROM copies JOIN checkouts ON (copies.id = checkouts.copy_id) JOIN patrons ON (patrons.id = checkouts.patron_id) WHERE patrons.id = @PatronId;", conn);
+
+      SqlParameter patronIdParameter = new SqlParameter();
+      patronIdParameter.ParameterName = "@PatronId";
+      patronIdParameter.Value = this.GetId();
+
+      cmd.Parameters.Add(patronIdParameter);
+
+      rdr = cmd.ExecuteReader();
+
+      while (rdr.Read())
+      {
+        int copyId = rdr.GetInt32(0);
+        DateTime copyCheckoutDate = rdr.GetDateTime(1);
+        string copyCondition = rdr.GetString(2);
+        int patronId = rdr.GetInt32(3);
+        DateTime copyDueDate = rdr.GetDateTime(4);
+        Copy newCopy = new Copy (copyCondition, patronId, copyCheckoutDate, copyDueDate, copyId);
+        allCopies.Add(newCopy);
+      }
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+      return allCopies;
+    }
     public static Patron Find (int searchId)
     {
       Patron foundPatron = new Patron ("", "", ""); //Program needs some value inside a Patron object
