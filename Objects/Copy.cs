@@ -7,12 +7,12 @@ namespace Library
   public class Copy
   {
     private int _id;
-    private DateTime? _checkoutDate;
+    private DateTime _checkoutDate;
     private string _condition;
     private int _bookId;
-    private DateTime? _dueDate;
+    private DateTime _dueDate;
 
-    public Copy (DateTime? CheckoutDate, string Condition, int BookId, DateTime? DueDate, int Id = 0)
+    public Copy (string Condition, int BookId, DateTime CheckoutDate = default(DateTime), DateTime DueDate = default(DateTime), int Id = 0)
     {
       _id = Id;
       _checkoutDate = CheckoutDate;
@@ -24,11 +24,11 @@ namespace Library
     {
       return _id;
     }
-    public DateTime? GetCheckoutDate()
+    public DateTime GetCheckoutDate()
     {
       return _checkoutDate;
     }
-    public void SetCheckoutDate (DateTime? newCheckoutDate)
+    public void SetCheckoutDate (DateTime newCheckoutDate)
     {
       _checkoutDate = newCheckoutDate;
     }
@@ -48,11 +48,11 @@ namespace Library
     {
       _bookId = newBookId;
     }
-    public DateTime? GetDueDate()
+    public DateTime GetDueDate()
     {
       return _dueDate;
     }
-    public void SetDueDate (DateTime? newDueDate)
+    public void SetDueDate (DateTime newDueDate)
     {
       _dueDate = newDueDate;
     }
@@ -132,11 +132,11 @@ namespace Library
       while (rdr.Read())
       {
         int copyId = rdr.GetInt32(0);
-        DateTime? copyCheckoutDate = rdr.GetDateTime(1);
+        DateTime copyCheckoutDate = rdr.GetDateTime(1);
         string copyCondition = rdr.GetString(2);
         int bookId = rdr.GetInt32(3);
-        DateTime? copyDueDate = rdr.GetDateTime(4);
-        Copy newCopy = new Copy (copyCheckoutDate, copyCondition, bookId, copyDueDate, copyId);
+        DateTime copyDueDate = rdr.GetDateTime(4);
+        Copy newCopy = new Copy (copyCondition, bookId, copyCheckoutDate, copyDueDate, copyId);
 
         allCopies.Add(newCopy);
       }
@@ -152,7 +152,7 @@ namespace Library
     }
     public static Copy Find (int searchId)
     {
-      Copy foundCopy = new Copy(new DateTime(0), "", 0, new DateTime(0)); //Program needs some value inside a Copy object
+      Copy foundCopy = new Copy("", 0); //Program needs some value inside a Copy object
       SqlConnection conn = DB.Connection();
       conn.Open();
       SqlDataReader rdr = null;
@@ -170,11 +170,11 @@ namespace Library
       while (rdr.Read())
       {
         int copyId = rdr.GetInt32(0);
-        DateTime? copyCheckoutDate = rdr.GetDateTime(1);
+        DateTime copyCheckoutDate = rdr.GetDateTime(1);
         string copyCondition = rdr.GetString(2);
         int bookId = rdr.GetInt32(3);
-        DateTime? copyDueDate = rdr.GetDateTime(4);
-        Copy newCopy = new Copy (copyCheckoutDate, copyCondition, bookId, copyDueDate, copyId);
+        DateTime copyDueDate = rdr.GetDateTime(4);
+        Copy newCopy = new Copy (copyCondition, bookId, copyCheckoutDate, copyDueDate, copyId);
 
         foundCopy = newCopy;
       }
